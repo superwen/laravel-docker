@@ -8,13 +8,12 @@ RUN wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Ce
 RUN wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
 RUN sed -i -e '/mirrors.cloud.aliyuncs.com/d' -e '/mirrors.aliyuncs.com/d' /etc/yum.repos.d/CentOS-Base.repo
 
-RUN yum install -y https://mirror.webtatic.com/yum/el7/webtatic-release.rpm \
-    && yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm \
+RUN rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm \
+    && rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-7.rpm \
     && yum clean all && yum -y update \
     && yum install -y gcc gcc-c++ python3 libjpeg libjpeg-devel libpng-devel freetype freetype-devel yum-utils \
-    && yum install -y nginx supervisord \
     && yum-config-manager --enable remi-php73 \
-    && yum -y install php php-devel php-fpm php-pdo php-pdo_mysql php-pear phpmbstring php-mcrypt php-devel php-cli php-gd php-pear php-curl php-mysql php-ldap php-zip php-fileinfo 
+    && yum install -y nginx supervisord php php-devel php-fpm php-pdo php-pdo_mysql php-pear phpmbstring php-mcrypt php-devel php-cli php-gd php-pear php-curl php-mysql php-ldap php-zip php-fileinfo 
 
 COPY ./configs/php7.3.ini /etc/php.ini
 COPY ./configs/www.conf /etc/php-fpm.d/www.conf
