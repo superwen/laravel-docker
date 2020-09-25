@@ -2,8 +2,6 @@
 
 FROM  centos:7.8.2003
 
-ENV NGINX_CONF_DIR=/etc/nginx
-
 RUN yum install -y wget 
 RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 RUN wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
@@ -20,9 +18,10 @@ RUN yum install -y https://mirror.webtatic.com/yum/el7/webtatic-release.rpm \
 
 COPY ./configs/php7.3.ini /etc/php.ini
 COPY ./configs/www.conf /etc/php-fpm.d/www.conf
-COPY ./configs/nginx.conf ${NGINX_CONF_DIR}/nginx.conf
-COPY ./configs/app.conf ${NGINX_CONF_DIR}/sites-enabled/app.conf
+COPY ./configs/nginx.conf /etc/nginx/nginx.conf
+COPY ./configs/app.conf /etc/nginx/sites-enabled/app.conf
 COPY ./supervisord.conf /etc/supervisor/conf.d/
+COPY ./app /var/www/app/
 
 WORKDIR /var/www/app/
 EXPOSE 80 443
