@@ -2,6 +2,8 @@
 
 FROM  centos:7.8.2003
 
+ENV NGINX_CONF_DIR=/etc/nginx
+
 RUN yum install -y wget 
 RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 RUN wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
